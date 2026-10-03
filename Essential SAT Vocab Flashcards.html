@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Essential SAT Vocab Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9EDF4; --card:#FFFFFF; --ink:#1B2850; --ink-2:#4B587A; --line:#C9D1E3;
+  --rule:#D6DEF0; --margin:#E0556B; --mark:#FBD34D; --ok:#1F8A5B; --learn:#C8472F;
+  --chip:#DCE3F1; --chip-on:#1B2850; --chip-on-ink:#FFFFFF; --shadow:0 1px 0 #fff inset,0 18px 40px -18px rgba(27,40,80,.35);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10162B; --card:#1A2342; --ink:#E8ECF8; --ink-2:#A3AED0; --line:#33406B;
+    --rule:#26315A; --margin:#F0788B; --mark:#8A6D10; --ok:#4FC28C; --learn:#F0836C;
+    --chip:#222C52; --chip-on:#E8ECF8; --chip-on-ink:#10162B; --shadow:0 18px 40px -18px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10162B; --card:#1A2342; --ink:#E8ECF8; --ink-2:#A3AED0; --line:#33406B;
+  --rule:#26315A; --margin:#F0788B; --mark:#8A6D10; --ok:#4FC28C; --learn:#F0836C;
+  --chip:#222C52; --chip-on:#E8ECF8; --chip-on-ink:#10162B; --shadow:0 18px 40px -18px rgba(0,0,0,.7);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 40px}
+h1{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:clamp(1.4rem,4vw,1.8rem);margin:0 0 2px;letter-spacing:-.01em}
+.sub{margin:0 0 16px;color:var(--ink-2);font-size:.95rem}
+.bar{height:8px;background:var(--chip);border-radius:99px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%;transition:width .3s}
+.bar .k{background:var(--ok)} .bar .l{background:var(--learn)}
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 14px;font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:.85rem;color:var(--ink-2)}
+.stats b{color:var(--ink)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;align-items:center}
+.chip,.btn,select{font:500 .85rem "Bricolage Grotesque",Arial,sans-serif;border:0;border-radius:8px;background:var(--chip);color:var(--ink);padding:8px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink)}
+.sep{width:1px;height:22px;background:var(--line);margin:0 2px}
+select{appearance:auto}
+button:focus-visible,select:focus-visible,.card:focus-visible{outline:3px solid var(--margin);outline-offset:2px}
+.pos{font:italic 400 1rem "Source Serif 4",Georgia,serif;color:var(--ink-2)}
+.scene{perspective:1400px}
+.card{display:grid;width:100%;min-height:340px;border:0;padding:0;background:none;cursor:pointer;text-align:left;font:inherit;color:inherit;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.3,.7,.2,1);border-radius:10px}
+.card.flipped{transform:rotateY(180deg)}
+.face{position:relative;grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:10px;box-shadow:var(--shadow);border:1px solid var(--line);padding:0;display:flex;flex-direction:column;overflow:hidden}
+.face.back{transform:rotateY(180deg);
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px);
+  background-position:0 52px}
+.face::before{content:"";display:block;height:2px;background:var(--margin);margin-top:46px;order:-1;position:absolute;left:0;right:0}
+.top{height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font:500 .8rem "Bricolage Grotesque",Arial,sans-serif;color:var(--ink-2);background:var(--card)}
+.body{padding:22px 24px 26px;flex:1}
+.front .body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding-top:44px}
+.word{font:700 clamp(2.2rem,9vw,3.6rem)/1.05 "Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;letter-spacing:-.02em;margin:0;overflow-wrap:anywhere}
+.hint{margin-top:18px;font:500 .8rem "Bricolage Grotesque",Arial,sans-serif;color:var(--ink-2)}
+.star{display:inline-flex;align-items:center;gap:6px;color:var(--margin);font-weight:700}
+.back .body{padding-top:46px}
+.back .w{font:700 1.35rem "Bricolage Grotesque",Arial,sans-serif;margin:0 0 6px}
+.sense{margin:0 0 14px}
+.def{font-size:1.15rem;line-height:1.45;margin:0 0 6px;font-weight:600}
+.ex{font-size:1.02rem;line-height:32px;margin:0;color:var(--ink);font-style:italic}
+.ex mark{background:linear-gradient(transparent 55%,var(--mark) 55%);color:inherit;font-style:normal;font-weight:600}
+.rel{margin-top:6px;font-size:.92rem;line-height:1.5;color:var(--ink-2)}
+.rel b{font-family:"Bricolage Grotesque",Arial,sans-serif;font-weight:500}
+.nav{display:flex;align-items:center;gap:10px;margin-top:18px}
+.nav .grow{flex:1;text-align:center;font:500 .9rem "Bricolage Grotesque",Arial,sans-serif;color:var(--ink-2)}
+.arrow{width:46px;height:46px;border-radius:50%;padding:0;font-size:1.2rem}
+.mark{display:flex;gap:10px;margin-top:12px}
+.mark button{flex:1;padding:14px;font-size:1rem;border-radius:10px;color:#fff;font-weight:700}
+.mark .learn{background:var(--learn)} .mark .got{background:var(--ok)}
+.mark button:disabled{opacity:.45;cursor:default}
+.keys{margin-top:18px;font-size:.82rem;color:var(--ink-2);text-align:center;line-height:1.6}
+kbd{font:500 .78rem "Bricolage Grotesque",Arial,sans-serif;background:var(--chip);border-radius:5px;padding:1px 6px}
+.empty{padding:50px 20px;text-align:center;color:var(--ink-2)}
+.done{margin-top:12px;text-align:center;color:var(--ok);font:700 1rem "Bricolage Grotesque",Arial,sans-serif;min-height:1.4em}
+.status{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--line)}
+.status.k{background:var(--ok)} .status.l{background:var(--learn)}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar i{transition:none}}
+@media (max-width:480px){.body{padding:18px}.sep{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Essential SAT Vocab</h1>
+  <p class="sub">387 high-impact words from the Ivy League Mentors Digital SAT list.</p>
+
+  <div class="bar" aria-hidden="true"><i class="k" id="bk"></i><i class="l" id="bl"></i></div>
+  <div class="stats" id="stats"></div>
+
+  <div class="controls" role="group" aria-label="Deck options">
+    <button class="chip" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-f="new" aria-pressed="false">Not yet seen</button>
+    <button class="chip" data-f="l" aria-pressed="false">Still learning</button>
+    <button class="chip" data-f="k" aria-pressed="false">Got it</button>
+    <button class="chip" data-f="star" aria-pressed="false">★ Tricky meanings</button>
+    <span class="sep"></span>
+    <button class="btn" id="mode">Showing: word first</button>
+    <button class="btn" id="shuffle" aria-pressed="false">Shuffle: off</button>
+    <select id="letter" aria-label="Jump to letter"></select>
+    <button class="btn" id="reset">Reset progress</button>
+  </div>
+
+  <div class="scene">
+    <button class="card" id="card" aria-live="polite" aria-label="Flashcard. Press to flip."></button>
+  </div>
+
+  <div class="nav">
+    <button class="btn arrow" id="prev" aria-label="Previous card">←</button>
+    <div class="grow" id="pos"></div>
+    <button class="btn arrow" id="next" aria-label="Next card">→</button>
+  </div>
+  <div class="mark">
+    <button class="learn" id="bl2">Still learning</button>
+    <button class="got" id="bg2">Got it</button>
+  </div>
+  <div class="done" id="done" role="status"></div>
+  <div class="keys"><kbd>Space</kbd> flip &nbsp; <kbd>←</kbd> <kbd>→</kbd> navigate &nbsp; <kbd>L</kbd> still learning &nbsp; <kbd>G</kbd> got it</div>
+</div>
+
+<script>
+const RAW = `Abolish|v|To prohibit or put an end to a system or practice, especially slavery.|Reformers like Frederick Douglass and William Lloyd Garrison dedicated their lives to abolishing slavery.|abolition (n): the act of abolishing; abolitionist (n): someone involved in the abolition movement|0
+Abundant|adj|Existing or available in large quantities.|The region's abundant natural resources have made it a focal point of economic development.||0
+Accentuate|v|To emphasize or make more noticeable.|The designer used bold colors to accentuate the artwork’s key features.||0
+Accessible|adj|Easy to approach, reach, or understand.|The study was written in accessible language, making it suitable for a general audience.||0
+Acknowledge|v|To accept or admit the existence or truth of something.|The scientist acknowledged the limitations of her study in the final report.|acknowledgment (n): the act of accepting or admitting something|0
+Acquiesce|v|To accept something reluctantly but without protest.|The minority group ultimately acquiesced to the revised framework despite earlier reservations.||0
+Acquire|v|To gain or come into possession of.|Over time, students acquire a deeper understanding of the subject matter.||0
+Adapt|v|To adjust to new conditions or environments.|Over time, species evolve to adapt to changes in their ecosystems, increasing their chances of survival.||0
+Address|v|To deal with or focus on.|The paper addresses the ethical implications of genetic modification.||1
+Adept|adj|Very skilled or proficient at something.|Nathan Greenberg is not only an incredible teacher, but also an adept jazz guitarist.||0
+Adequate|adj|Sufficient or acceptable in quality or quantity.|The experimental design was deemed adequate to yield statistically meaningful results.||0
+Adhere|v|To stick firmly to a surface or to follow a practice or belief closely.|The students must adhere to the school's dress code.|adherence (n): the act of sticking to or following closely|0
+Advance|v|To propose or support (an idea or theory).|The author advances a compelling argument for policy reform.||1
+Adverse|adj|Harmful or unfavorable.|The adverse weather conditions caused the event to be postponed.|adversity (n): difficulties or misfortune|0
+Advocate|v§n|To support or argue in favor of something.§One who publicly supports something.|The author advocated for greater freedom of press.§Allenby was a firm advocate for women’s rights.||0
+Aesthetic|adj|Concerned with beauty or appearance.|The architect’s aesthetic choices reflect a minimalist philosophy that values simplicity and form.||0
+Afford|v|To provide or allow.|The new policy affords greater flexibility to public institutions.||1
+Affluent|adj|Having a great deal of money; wealthy.|Affluent communities often demonstrate higher educational attainment and better health outcomes.||0
+Aggravate|v|To worsen or intensify a situation.|Increased deforestation aggravates the effects of climate change.||0
+Alleviate|v|To make something less severe or intense.|The medicine helped to alleviate her headache.||0
+Alter|v|To change or modify.|The findings may alter prevailing theories in neuroscience.||0
+Altruistic|adj|Showing a selfless concern for the well-being of others.|The organization’s altruistic initiatives contributed significantly to improving local public health.||0
+Ambiguous|adj|Open to more than one interpretation; unclear or inexact in meaning.|The painting’s ambiguous symbolism invites viewers to draw their own conclusions about its meaning and intent.||0
+Ambivalent|adj|Having mixed feelings.|Due to the excitement about productivity increases, as well as fears of human job loss, many are ambivalent about AI.|ambivalence (n): the state of being ambivalent|0
+Ample|adj|More than enough; sufficient.|The evidence presented was ample to support the hypothesis.||0
+Analogous|adj|Similar, comparable in certain respects.|The events of Orwell’s Animal Farm are analogous to those of the Russian Revolution.|analogy (n): a comparison, typically for explanation or illustration|0
+Anecdote|n|A brief story, often one of a personal or informal nature.|The speaker used an anecdote about her childhood to connect with the audience.||0
+Anomaly|n|Something that deviates from what is standard, normal, or expected.|The anomaly in the data set required further investigation.|anomalous (adj): deviating from the norm|0
+Anticipate|v|To predict or expect.|The effect was stronger than the researchers had anticipated.|anticipation (n): the state of anticipating something|0
+Apathetic|adj|Showing or feeling little or no interest or enthusiasm.|The study attributes low civic engagement to the apathetic attitudes prevalent among young voters.||0
+Appease|v|To pacify or placate by acceding to demands.|In an effort to appease stakeholders, the university implemented several key policy changes.||0
+Apprehend|v|To understand or comprehend.|She couldn’t apprehend how someone could believe such an obvious lie.||0
+Apprehensive|adj|Concerned, anxious.|Many students feel apprehensive about the SAT.||0
+Arbitrary|adj|Based on random choice or personal whim, rather than any reason or system.|The judge's arbitrary decision left many people confused.||0
+Arduous|adj|Requiring great effort or labor; difficult.|The fieldwork involved an arduous journey through remote terrain to gather primary data.||0
+Arrogant|adj|Having an exaggerated sense of one's own importance or abilities.|The critic described the artist’s statement as arrogant, noting its dismissive tone toward differing interpretations of the work.||0
+Articulate|v|To express thoughts, ideas, or feelings clearly and effectively.|In her presentation, the student articulated a compelling argument about the social impact of urban design.||0
+Ascertain|v|To find out or learn something with certainty.|The scientist conducted several experiments to ascertain the cause of the unexpected reaction.||0
+Ascribe|v|To attribute something (to a cause).|Many historians ascribe the downfall of the Ottoman Empire to a combination of internal strife and external invasions.||0
+Aspire|v|To seek to attain or accomplish a particular goal, often one of high value or ambition.|Many students aspire to careers in medicine, driven by a desire to help others and advance scientific knowledge.|aspiration (n): a goal|0
+Assertion|n|A confident and forceful claim.|The speaker’s assertion that we need stricter gun control was met by applause.|assert (v): to make an assertion|0
+Assess|v|To evaluate or estimate the nature, ability, or quality of.|The professor assesses student performance through both exams and projects.||0
+Assume|v§v|To take for granted without proof.§To take on a role, responsibility, or position.|The author assumes the audience is familiar with the historical context of the event.§After the resignation of the director, the assistant assumed leadership of the project.||0
+Astute|adj|Having or showing sharp judgment and the ability to understand things clearly and quickly.|The astute investor recognized the potential of the emerging market before others did.||0
+Attribute|v§n|To regard something as being caused by (someone or something).§A quality or characteristic that is inherent in or ascribed to someone or something.|The app’s popularity has been attributed to its ease of use and powerful editing features.§Patience is often considered an important attribute of a successful teacher.||0
+Atypical|adj|Not typical; not representative of a group, situation, or category.|The patient's atypical symptoms made the diagnosis more challenging for the medical team.||0
+Authentic|adj|Genuine; real or true, not fake or copied.|Archaeologists confirmed the artifact was authentic, dating it back to the early Bronze Age.|authenticity (n): the quality of being genuine|0
+Averse|adj|Having a strong dislike or opposition to something.|Most people are averse to taking unnecessary risks.|aversion (n): a strong dislike or disinclination|0
+Avid|adj|Enthusiastic or showing great interest and eagerness.|She is an avid reader who finishes several books every month.||0
+Beneficiary|n|One who benefits from something.|The main beneficiaries of the new tax cut will be large corporations.||0
+Benign|adj|Harmless or kind.|The biopsy confirmed that the tumor was benign.||0
+Bias|n|Prejudice in favor of or against a thing, person, or group, usually in a way considered to be unfair.|Some have accused top universities of having a bias against Asian students.|biased (adj): having bias|0
+Blatant|adj|Completely lacking in subtlety; obvious.|The findings reveal a blatant discrepancy between policy rhetoric and implementation.||0
+Bolster|v|To strengthen or provide support.|The author bolsters her argument with demographic data drawn from twelve countries over a period of three decades.||0
+Candid|adj|Open and straightforward; honest and sincere.|The artist gave a candid interview about the challenges of the creative process.||0
+Captivate|v|To attract and hold the attention of someone.|The documentary captivated its audience with stunning visuals and compelling storytelling.||0
+Capture|v|To represent or describe accurately.|The graph captures the fluctuations in unemployment rates.||1
+Catalyst|n|A person or thing that precipitates an event or change.|The publication served as a catalyst for broader discussions on academic freedom.||0
+Cause|n|A principal, goal, or movement that one is prepared to defend or advocate.|She devoted her life to the cause of deaf people.||1
+Challenge|v|To dispute the truth or validity of something.|The author challenged the assumption that early humans evolved exclusively in Africa.||1
+Champion|v|To support, defend, or advocate for a cause or person.|She championed environmental reforms throughout her career.||1
+Chronicle|v|To record events in the order in which they occurred.|The historian chronicled the rise and fall of the ancient empire in meticulous detail.||0
+Coerce|v|To persuade someone to do something by force or threats.|The paper explores how authoritarian regimes coerce compliance through media control.||0
+Cognizant|adj|Having knowledge or awareness.|Scholars must remain cognizant of historical context when analyzing contemporary political developments.||0
+Coherent|adj|Clear and logical; easy to understand because ideas are well connected.|The essay presented a coherent argument that convinced the readers of its validity.|incoherent (adj): not coherent|0
+Cohesive|adj|Forming a united whole; logically connected and consistent.|The essay was praised for its cohesive structure, with each paragraph clearly supporting the central argument.||0
+Cohort|n|A group, often in the context of an experiment.|The study followed a cohort of college students over four years to track their career development.||0
+Coincide|v|To happen at the same time or to match in position or character.|Major population migrations often coincide with periods of political instability or environmental change.||0
+Collaborate|v|To work together with one or more people to achieve a common goal.|The scientists collaborated on the research project to develop a new vaccine.||0
+Commend|v|To praise or express approval of someone or something.|The teacher commended the student for her thorough research and clear presentation.||0
+Common|adj|Shared or public.|Moths and butterflies share several common traits.||1
+Comparable|adj|Similar.|Medieval Japan was comparable to Europe in that both had a hierarchical feudal system.||0
+Compelling|adj|Convincing or persuasive.|The new discovery provides compelling evidence that the early settlers of North America arrived via a land bridge from Asia.|compel (v): to force or oblige|0
+Competent|adj|Capable, having sufficient ability.|The study found that employees who asked questions were evaluated as more competent by their peers.||0
+Complacent|adj|Showing smug or uncritical satisfaction with oneself or one's achievements.|After a decade of economic growth, the firm became complacent and stopped funding research and development.||0
+Comprehensive|adj|Complete; including all or nearly all elements or aspects of something.|Ivy League Mentors founder Nathan Greenberg has provided hundreds of students with comprehensive support on their college applications.||0
+Compromise|v|To weaken or undermine.|The lack of a strong federal government compromised the power of the United States under the Articles of the Confederation.||1
+Concede|v|To admit that something is true or valid, especially an opposing argument or counterpoint.|The author conceded that genetically modified foods are probably no more dangerous than organic foods.|concession (n): an acknowledgement of a limitation or counterpoint to one’s argument|0
+Conceivable|adj|Capable of being imagined or believed.|It is conceivable that future technology could eliminate many current environmental problems.|inconceivable (adj): not capable of being imagined or believed; conceive (v): to think of or form an idea in the mind|0
+Concise|adj|Giving a lot of information clearly and in a few words; brief but comprehensive.|The instructions were concise and easy to follow.||0
+Conclusive|adj|Decisive or convincing; serving to prove a case.|Though scientists believe that the moon was formed by fragments of the earth dislodged in a collision, the evidence remains inconclusive.|inconclusive (adj): not conclusive; conclude (v): to arrive at a decision or determine the answer|0
+Concrete|adj|Real, solid, or definite; not abstract or vague.|The scientist provided concrete evidence to support the theory.||0
+Concur|v|To agree.|The two research teams concurred that the settlement was most likely occupied in the late 1500s.||0
+Condemn|v|To express complete disapproval of something, typically in public.|The candidate condemned her opponent as racist and sexist.|condemnation (n): strong disapproval or criticism|0
+Conducive|adj|Making a certain outcome likely or possible.|The structured environment proved conducive to high levels of academic performance.||0
+Confirm|v|To establish the truth or correctness of.|The second experiment confirmed the initial results.||0
+Conform|v|To match or follow, generally to rules, conventions, or expectations.|The results did not conform to his expectations.|conformity (n): a state of matching or following others|0
+Consensus|n|A state of agreement.|The consensus among modern paleontologists is that birds are descendants of dinosaurs.||0
+Consequential|adj|Significant, important, or having serious consequences.|The court's decision was consequential for the future of environmental law.|inconsequential (adj): not important or significant|0
+Conspicuous|adj|Easily seen or noticed; attracting attention.|The bright red bird was conspicuous against the green leaves.||0
+Contend|v|To assert.|Feldman contends that the findings are consistent with his theory.|contention (n): an assertion|0
+Contentious|adj|Causing or likely to cause disagreement or controversy.|The article provides a balanced perspective on the contentious debate over standardized testing.||0
+Control|n|An element that remains unchanged and is used as a benchmark or point of comparison in an experiment.|The plants in the one group were exposed to mites, while those in the control group were not.||0
+Converge|v|To come together.|Opinions on the matter have begun to converge.||0
+Conventional|adj|Common or traditional.|The conventional view that Columbus was the first European to set foot in the New World was debunked by the discovery of Viking artifacts in Canada.|convention (n): a tradition or common way of doing things|0
+Convey|v|To communicate or express.|The author conveys a sense of urgency throughout the passage.||0
+Copious|adj|Abundant in supply or quantity.|The researchers amassed copious amounts of ethnographic data over the course of the study.||0
+Correlate|v|To have a mutual relationship or connection.|Studies show that stress levels correlate with heart disease.|correlation (n): a mutual relationship or connection between two or more things|0
+Corroborate|v|To confirm or give support.|His students’ high test results corroborated Nathan’s assertion that he is the best teacher ever.||0
+Counteract|v|To act against something in order to reduce its force or neutralize it.|The medication was designed to counteract the effects of the toxin in the body.||0
+Counterclaim|n|A claim that goes against the main claim or argument.|His argument about the efficiency of nuclear power was met with a counterclaim about concerns regarding its safety.||0
+Credible|adj|Believable; able to be trusted as true or reliable.|The scientist presented credible evidence to support her theory, earning the respect of her peers.||0
+Critical|adj|Important, vital.|The hippocampus plays a critical role in memory.||1
+Critique|v|To evaluate or analyze critically.|The article critiques the methodology used in prior studies.||0
+Cynical|adj|Believing that people are motivated primarily by self-interest; distrustful.|His cynical attitude made him doubt the politician’s promises.||0
+Daunting|adj|Seeming difficult to deal with in anticipation; intimidating.|The prospect of writing a dissertation appeared daunting to many students.||0
+Dearth|n|A scarcity or lack of something.|There was a dearth of evidence to support the claim.||0
+Debilitate|v|To weaken or impair the strength of.|Chronic underfunding has debilitated the capacity of public institutions to meet societal needs.||0
+Debunk|v|To prove that a belief, idea, or claim is false or mistaken.|The scientist debunked the myth that vaccines cause illness.||0
+Deceptive|adj|Dishonest or misleading.|The argument that illegal immigrants steal jobs is deceptive; in fact, the majority of illegal immigrants take low-paying and dangerous jobs that citizens don’t want.|deceive (v): to lie or mislead|0
+Decipher|v|To uncover the meaning of something that is in code or difficult to understand.|The archaeologist managed to decipher the ancient script.||0
+Decisive|adj|Conclusive or final; settling an issue.|Decisive evidence has emerged, ending the debate about the origins of the fossil.||0
+Decline|v|To gradually decrease or become smaller.|The study showed that bird populations declined over the past decade.||0
+Deficient|adj|Lacking in some essential quality or element.|The initial draft was deficient in empirical evidence and theoretical grounding.||0
+Degrade|v|To deteriorate, weaken, or lower in dignity.|Government corruption degrades our democracy.||0
+Deliberate|adj§v|Done consciously and intentionally.§To think about or discuss something carefully, especially before making a decision.|The authors took a deliberate approach in framing their argument within a sociopolitical context.§The committee took several hours to deliberate before reaching a final verdict on the policy proposal.||0
+Demeanor|n|A person's outward behavior, manner, or appearance.|Despite the tense situation, the professor maintained a calm and composed demeanor throughout the discussion.||0
+Demographic|n|A particular sector of a population.|The survey targeted a broad demographic to ensure diverse representation in the findings.||0
+Denounce|v|To publicly declare to be wrong or bad.|Sanders denounced the U.S. military's use of chemical weapons on children in Cambodia and Vietnam.||0
+Depict|v|To represent or show something visually or in words.|The painting depicts a serene landscape at sunset.||0
+Deprive|v|To take something away from someone or prevent them from having it.|Prolonged drought can deprive entire ecosystems of the water they need to survive.|deprivation (n): the lack or denial of something necessary for well-being|0
+Derive|v|To come from or obtain from a specified source.|The word 'coffee' derives from the Turkish word 'kahve.'||0
+Despondent|adj|Depressed, sad, in low spirits.|After she failed to get into Brown, Sara was despondent.||0
+Detract|v|To reduce or take away the worth or value of something.|Minor typographical errors did not significantly detract from the overall impact of the manuscript.||0
+Detrimental|adj|Harmful.|Excessive smartphone usage is detrimental to sleep.||0
+Deviate|v|To depart from an established course or norm.|The pilot had to deviate from the planned route due to bad weather.|deviation (n): the action of departing from an established course or accepted standard|0
+Devoid|adj|Completely lacking or free from something.|The essay was well-organized but devoid of original analysis, which weakened its overall impact.||0
+Differentiate|v|To recognize or show the differences between two or more things.|The biological study differentiates between the genetic traits of two closely related species.||0
+Digress|v|To leave the main subject temporarily in speech or writing.|Although the author digresses briefly, the central thesis remains coherent and well-supported.|digression (n): a temporary departure from the main subject|0
+Diligent|adj|Showing care and conscientiousness in one's work or duties.|The research assistant demonstrated diligent attention to detail in compiling the literature review.||0
+Diminish|v|To reduce in size, importance, or intensity.|The scientist noted that the species’ population began to diminish due to habitat loss and pollution.||0
+Discern|v|To perceive, notice, or distinguish between things.|Only experts are able to discern the difference between a genuine Vermeer and works by his apprentices.|discernable (adj): able to be perceived|0
+Disclose|v|To make (secret or new information) known.|The company refused to disclose the details of the settlement.|disclosure (n): the action of making new or secret information known|0
+Discredit|v|To prove false; to damage the reputation of someone or something.|The author aimed to discredit the theory that the manuscript was written by Ortega.||0
+Discrepancy|n|A lack of agreement or consistency between two or more facts or versions.|Researchers noted a discrepancy between the reported data and the results of the follow-up experiment.||0
+Discuss|v|To talk about or examine in detail.|The essay discusses the implications of the legislation.||1
+Disdain|n|Contempt or strong disapproval.|In Guernica, Picasso expressed disdain for the violence of the Franco Regime.||0
+Dismiss|v|To ignore or reject, often without serious consideration.|The press dismissed the president’s claims of voter fraud.|dismissal (n): the act of ignoring or rejecting|1
+Disparage|v|To regard as being of little worth or inferior.|Nathan disparaged the old SAT textbook, which was full of mistakes and bad advice.||0
+Disparate|adj|Different or distinct.|The group consisted of individuals from disparate backgrounds, each bringing unique perspectives and experiences to the discussion.|disparity (n): a noticeable difference or inequality between things|0
+Display|v|To show or exhibit.|The chart displays population trends over time.||0
+Dispute|v|To question or argue against the truth or validity of something.|The scientist disputed the earlier findings, presenting new evidence that challenged the original conclusion.||1
+Dissent|n|The expression or holding of opinions at variance with those commonly or officially held.|The article highlights academic dissent regarding the prevailing economic model.||0
+Distinction|n|A difference or contrast between similar things or people.|Many people are unaware of the important distinctions between alligators and crocodiles.|distinguish (v): to notice distinctions; distinct (adj): different or having distinctions|0
+Distort|v|To twist or misrepresent.|The article distorts the original findings of the study.||0
+Diverge|v|To separate from another route or opinion and go in a different direction.|The two schools of thought began to diverge in their interpretations of the data.||0
+Dormant|adj|Temporarily inactive or not growing, but capable of becoming active later.|The volcano had been dormant for centuries before signs of activity began to emerge again.||0
+Dubious|adj|Hesitating or doubting; not to be relied upon.|The results of the experiment were dubious at best.||0
+Eclectic|adj|Deriving ideas, style, or taste from a broad and diverse range of sources.|Her music taste is eclectic, ranging from classical to hip-hop.||0
+Efficacy|n|The ability to produce a desired or intended result.|The clinical trial evaluated the efficacy of the treatment across various age groups.||0
+Elaborate|v|To develop or present in detail.|The author elaborated on the proposal in her manifesto.||1
+Elicit|v|To evoke or draw out (a response or reaction) from someone.|The teacher's question elicited a thoughtful response from the student.||0
+Eloquent|adj|Fluent and persuasive in speaking or writing.|The speaker gave an eloquent speech that moved the audience and clearly conveyed the importance of climate action.||0
+Elusive|adj|Difficult to find or achieve.|A cure for Alzheimer’s disease has remained elusive to researchers.|elude (v): to avoid or escape detection|0
+Embrace|v|To accept or welcome something eagerly or with enthusiasm.|The scientific community quickly embraced the new theory, recognizing its potential to revolutionize the field.||0
+Employ|v|To use.|The researchers employed an innovative technique to track the migrations of monarch butterflies.||1
+Emulate|v|To imitate or strive to equal or surpass someone or something.|The young artist sought to emulate the techniques of the Renaissance masters in her paintings.||0
+Endorse|v|To express support or approval of.|Multiple peer-reviewed journals endorsed the use of open-access publishing models.||0
+Endure|v|To continue or persist through hardship or difficulty.|The ancient trees have endured harsh winters and strong storms for centuries.||0
+Enfranchise|v|To give the right to vote.|The 15th Amendment enfranchised black Americans.|disenfranchised (adj): lacking the right to vote|0
+Engender|v|To cause or give rise to a feeling, situation, or condition.|The new policy engendered widespread support among the community.||0
+Enhance|v|To improve something.|The new software is designed to enhance the performance of the computer.|enhancement (n): an improvement|0
+Enigmatic|adj|Mysterious or difficult to understand.|The philosopher’s enigmatic statements continue to spark debate among scholars.||0
+Entail|v|To involve or require as a necessary part.|Implementing the new curriculum would entail extensive teacher training and resource development.||0
+Entrenched|adj|Firmly established; difficult or unlikely to change.|The notion that some races were naturally inferior was deeply entrenched in 19th century society.||0
+Enumerate|v|To list or mention things one by one.|The article enumerates several policy recommendations based on the study’s findings.||0
+Ephemeral|adj|Lasting for a very short time; fleeting or temporary.|The artist’s installation was intentionally made of ice and leaves, emphasizing the ephemeral nature of beauty.||0
+Epitomize|v|To be a perfect example of something.|The works of Gabriel Garcia Marquez are said to epitomize the genre known as magical realism.|epitome (n): a person or thing that is a perfect example of something|0
+Equivocal|adj|Open to more than one interpretation; ambiguous.|His equivocal response left everyone in the room confused.|unequivocal (adj): not equivocal|0
+Eradicate|v|To completely destroy or eliminate something.|Scientists aim to eradicate certain diseases through widespread vaccination programs.||0
+Erratic|adj|Not even or regular in pattern or movement; unpredictable.|The subject’s erratic behavior complicated the interpretation of the psychological assessment.||0
+Erroneous|adj|Incorrect or based on a mistake.|The scientist retracted her claim after discovering that the data was based on an erroneous assumption.||0
+Esoteric|adj|Intended for or likely to be understood by only a small number of people with specialized knowledge.|The paper’s esoteric language limits its accessibility to a broader academic audience.||0
+Establish|v§v|To set up or create something on a firm or permanent basis.§To show something to be true or certain through evidence or argument.|The researchers worked together to establish a new laboratory for climate studies.§The study established a clear connection between air pollution and respiratory illness.||0
+Evince|v|To show or demonstrate clearly; to make evident.|Her speech evinced a strong commitment to social justice.||0
+Evoke|v|To call forth emotions, feelings, or responses.|The painting evokes a sense of nostalgia and longing in its viewers.||0
+Exacerbate|v|To make a situation, problem, or condition worse.|Her comments only served to exacerbate the tension between the two colleagues.||0
+Excerpt|n|A short extract from a text.|The analysis includes an excerpt from Tocqueville’s Democracy in America to illustrate the argument.||0
+Explicit|adj|Stated clearly and directly.|The journalist’s criticism of the president was implicit rather than explicit: the president’s name was not even mentioned in the article, but it was not difficult to read between the lines.||0
+Exploit|v|To use something or someone for one’s own advantage, often unfairly or unethically.|The company was criticized for exploiting natural resources without regard for environmental consequences.||0
+Explore|v|To investigate or study.|The researchers explored new methods of energy storage.||1
+Extol|v|To praise highly or enthusiastically.|The researcher extolled the benefits of the new vaccine, calling it a breakthrough in public health.||0
+Fabricate|v|To invent or make up, often in a dishonest way.|The defendant fabricated an excuse.||0
+Facilitate|v|To cause, encourage, or make easier.|The internet has facilitated communication between diverse populations.||0
+Feasible|adj|Possible to do easily or without an unreasonable amount of effort.|Nathan’s students complained that it wasn’t feasible to learn every term on this list.||0
+Flimsy|adj|Weak, light, or insubstantial.|The evidence presented in court was deemed flimsy.||0
+Fluctuate|v|To rise and fall or change, usually irregularly or unpredictably.|My score on the practice tests fluctuates from day to day.||0
+Former|n|The first item in a list of two.|There is a difference between lying and failing to disclose the full truth. The former is punishable by impeachment, while the latter is merely frowned upon.||1
+Formulate|v|To devise or develop methodically.|The scientists formulated a new hypothesis based on the data.||0
+Foster|v|To encourage or promote the development (of something).|It has been argued that free trade fosters peace, as countries with a mutually-beneficial trading relationship are less likely to attack one another.||0
+Frank|adj|Honest, direct, and blunt.|The doctor gave a frank assessment and did not attempt to hide the seriousness of her patient's condition.||0
+Fundamental|adj|Basic or essential.|The fundamental structure of the human brain is similar to that of other primates.||0
+Futile|adj|Incapable of producing any useful result; pointless.|Despite their efforts, the team realized that further attempts to repair the damaged data were futile.||0
+Generalization|n|A broad statement or conclusion.|The article warns against making sweeping generalizations based on a limited set of data.||0
+Genuine|adj|Real, authentic, or sincere.|After extensive analysis, experts confirmed that the medieval manuscript was genuine, not a modern forgery as some had suspected.||0
+Hierarchy|n|A system in which people, groups, or things are ranked one above the other according to status or authority.|The organization’s strict hierarchy determined decision-making power at every level.||0
+Highlight|v|To emphasize or draw attention to.|The article highlights disparities in access to education.||0
+Homogeneous|adj|Consisting of parts or elements that are all the same or very similar.|The laboratory created a homogeneous mixture to ensure consistent results in the chemical reaction.||0
+Hypothetical|adj|Imagined or suggested, but perhaps not true or really happening.|The economist presented a hypothetical model to predict inflation under varying fiscal conditions.||0
+Idealistic|adj|Involving noble or high-minded principles, but often not practical or realistic.|The notion that most billionaires will use their wealth and power to benefit society was mocked as idealistic.|idealist (n): someone with idealistic views; ideal (n): a noble or high-minded principle; ideal (adj): as good as possible|0
+Illuminate|v|To make something clear or easier to understand; to shed light on a subject.|The professor’s explanation helped illuminate the complex theory for the students.||0
+Imminent|adj|About to happen.|The scientists warned of imminent ecological collapse unless conservation efforts intensified.||0
+Impair|v|To weaken or damage something, especially a function or ability.|Exposure to loud noise over time can impair a person’s hearing.||0
+Impartial|adj|Unbiased; fair.|A judge should remain impartial in his or her decisions.||0
+Impede|v|To block, hinder, or restrain.|The heavy traffic on the highway impeded our progress and caused a significant delay in reaching our destination.||0
+Impending|adj|About to happen, likely to happen soon.|The author fled his country due to fears of impending war.||0
+Implication|n|A possible consequence or result.|The findings have significant implications for educational equity and resource allocation.||0
+Implicit|adj|Not stated clearly and directly; implied.|The journalist’s criticism of the president was implicit rather than explicit: the president’s name was not even mentioned in the article, but it was not difficult to read between the lines.||0
+Improvise|v|To create or perform something spontaneously without preparation.|When the projector failed, the lecturer had to improvise using only a whiteboard and marker.||0
+Incongruous|adj|Not in harmony or keeping with the surroundings or other aspects.|The incongruous imagery disrupted the otherwise cohesive narrative.|congruous (adj): in harmony or keeping with the surroundings or other aspects|0
+Incredulous|adj|Unwilling or unable to believe something; skeptical.|The researcher gave an incredulous look when presented with data that contradicted well-established findings.||0
+Incremental|adj|Increasing gradually by regular degrees or additions.|The authors advocate for an incremental policy shift rather than sweeping reform.||0
+Indispensable|adj|Absolutely necessary or essential.|Reliable data is indispensable for informed policymaking.|dispensable (adj): able to be replaced or done without|0
+Indifference|n|A lack of interest, opinion, or concern.|Martin Luther King Jr. maintained that we should never regard the suffering of others with indifference.|indifferent (adj): characterized by indifference|0
+Indignation|n|Anger or annoyance provoked by what is perceived as unfair treatment.|The separation of migrant children from their parents under the Trump regime was met with indignation by human rights organizations.|indignant (adj): having indignation|0
+Induce|v|To lead to or bring about a particular state or action.|The study found that certain environmental factors can induce stress responses in laboratory animals.||0
+Inept|adj|Having or showing no skill; clumsy.|The official’s inept response to the crisis eroded public confidence.||0
+Inevitable|adj|Certain to happen; unavoidable.|The authors argue that demographic shifts make urban expansion inevitable.||0
+Infallible|adj|Incapable of making mistakes or being wrong.|The renowned mathematician was known for his infallible calculations, as he never made errors in his complex equations.||0
+Infer|v|To deduce or conclude from evidence and reasoning.|Based on the results, one can infer a positive correlation between literacy and civic participation.||0
+Influx|n|The arrival or entry of a large number of people or things.|The city saw an influx of tourists during the festival season, boosting local businesses.||0
+Inherent|adj|Existing as a natural or essential part of something.|The inherent risks of the surgery were thoroughly explained.||0
+Inhibit|v|To hinder, restrain, or prevent.|Cold inhibits plant growth.|inhibition (n): restraint, prevention, or hesitancy|0
+Innate|adj|Inborn; arising naturally.|Humans possess an innate propensity for music.||0
+Innocuous|adj|Not harmful or offensive.|Though the reporter’s question was innocuous, the politician blushed with discomfort.||0
+Innovative|adj|Introducing new ideas or methods; creative and original.|The scientist’s innovative approach to renewable energy has the potential to revolutionize the industry.||0
+Insight|n|A clear and deep understanding of a situation or problem.|The researcher gained valuable insight into human behavior through extensive fieldwork.||0
+Insinuate|v|To suggest or hint something in an indirect and often unpleasant way.|The editorial insinuated that the funding source may have biased the research outcomes.||0
+Instinctive|adj|Done naturally or without conscious thought; arising from an inner impulse.|The bird’s instinctive migration patterns guide it thousands of miles each year.||0
+Integral|adj|Essential or necessary to make something complete.|Data visualization has become an integral component of modern scientific communication.||0
+Interchangeable|adj|Capable of being exchanged or substituted, often due to their similarities.|The interchangeable parts in the machine allowed for easy replacement and maintenance.||0
+Intermittent|adj|Occurring at irregular intervals; not continuous or steady.|The pain was intermittent, coming and going throughout the day.||0
+Intricate|adj|Highly complicated or detailed.|The artist's masterpiece was a painting filled with intricate details, showcasing his exceptional skill and attention to every delicate element.||0
+Intuitive|adj|Based on what one feels to be true without conscious reasoning.|She had an intuitive understanding of the complex situation.|intuition (n): the ability to understand something immediately, without conscious reasoning|0
+Invaluable|adj|Extremely useful or indispensable.|The professor’s guidance proved invaluable to the students completing their research projects.||0
+Invoke|v|To summon into action or bring into existence.|The politician invoked the spirit of unity during the speech to inspire the crowd.||0
+Irreconcilable|adj|Unable to coexist; unable to be resolved.|The notion of time travel is irreconcilable with our current laws of physics.|reconcile (v): to reach a compromise or a solution to an apparent paradox|0
+Ironic|adj|Contrary or opposite to expectations.|It’s ironic that so many farmers support barriers to free trade, given that such barriers cost them billions in lost revenue.|irony (n): the state of being ironic|0
+Justify|v|To show or prove to be right.|The author justifies the conclusions with ample evidence.||0
+Juxtapose|v|To place side by side for comparison or contrast.|The author juxtaposes narratives from two distinct historical periods to underscore their thematic similarities.||0
+Lament|v|To express grief or sorrow; to mourn.|The community lamented the loss of the historic landmark after the fire.||0
+Latent|adj|Hidden or undeveloped, but potentially present.|The study explores the latent consequences of early childhood trauma.||0
+Latter|n|The second item in a list of two.|There is a difference between lying and failing to disclose the full truth. The former is punishable by impeachment, while the latter is merely frowned upon.||0
+Lucid|adj|Expressed clearly; easy to understand.|The article provides a lucid explanation of complex economic theories for undergraduate readers.||0
+Lucrative|adj|Profitable.|For those who amass millions of followers, posting content on social media platforms like YouTube and TikTok can be very lucrative.||0
+Maintain|v|To assert.|The senator maintains that legalization of recreational drugs will increase tax revenue.||1
+Malleable|adj|Easily influenced or pliable.|The young student's mind was malleable and open to new ideas.||0
+Mar|v|To spoil or damage, and thus render less perfect.|Her happiness was marred by regret.||0
+Meticulous|adj|Extremely careful and precise with details.|The artist was meticulous in painting every tiny brushstroke to ensure a perfect portrait.||0
+Mimic|v|To imitate or copy the actions, speech, or appearance of someone or something.|The talented comedian could mimic the voices of various celebrities.||0
+Misconception|n|An incorrect belief or attitude.|It is a misconception that Columbus was the first European to reach the Americas. In fact, the Vikings reached North America hundreds of years before him.||0
+Misconstrue|v|To interpret something wrongly.|His silence was misconstrued as agreement.||0
+Mitigate|v|To make less severe, serious, or painful.|The recession was mitigated by government policies to assist poor families.||0
+Modest|adj|Small or not impressive.|The writer achieved modest success with her first novel, receiving positive reviews but limited sales.||1
+Mundane|adj|Lacking interest or excitement; dull.|The study reveals how seemingly mundane routines shape long-term behavior.||0
+Myriad|n|A countless or extremely great number.|The analysis accounted for a myriad of variables influencing public opinion.||0
+Naive|adj|Showing a lack of experience, wisdom, or judgment; overly trusting or innocent.|His naive approach to business caused him to overlook potential risks.||0
+Nebulous|adj|Vague, unclear, or ill-defined.|The philosopher's argument was compelling in tone but ultimately based on nebulous concepts that lacked concrete evidence.||0
+Neglect|v|To fail to do something.|The researchers neglected to consider how variations in soil acidity might affect plant growth.||1
+Negligible|adj|So small or unimportant as to be not worth considering; insignificant.|The error in measurement was negligible and did not affect the outcome of the experiment.||0
+Nostalgic|adj|Feeling a sentimental longing for the past.|The old photographs made her feel nostalgic for her childhood summers spent at the lake.||0
+Novel|adj|New or innovative.|The researchers used a novel approach to extract the genome.||1
+Notorious|adj|Well-known for unfavorable reasons.|The town was notorious for its frequent floods and unreliable infrastructure.||0
+Nuanced|adj|Characterized by subtle and often complex distinctions.|The nuanced argument presented in the debate showed a deep understanding of the issue.|nuance (n): a subtle distinction|0
+Obscure|adj|Not clear or not well known.|The author's obscure references made the text difficult to comprehend.|obscure (v): to conceal or make difficult to see or understand; obscurity (n): the state of being unknown, inconspicuous, or unimportant|0
+Obsolete|adj|No longer useful.|The advent of the computer made the typewriter obsolete.||0
+Objective|adj|Based on pure facts rather than on personal opinions or feelings.|It is difficult to be objective when evaluating art: a work of art that one person finds beautiful, another person might find hideous.||0
+Omit|v|To leave out or exclude.|The authors chose to omit irrelevant data to maintain clarity in their presentation.||0
+Opaque|adj|Not transparent; difficult to understand or explain.|The scientist criticized the report’s opaque language, arguing that it hindered clear communication of the findings.||0
+Optimism|n|The belief or expectation that an outcome will be positive, favorable, or desirable.|Sara expressed optimism about her score on the SAT, saying that she expected to achieve her target score.|optimistic (adj): characterized by optimism|0
+Orthodox|adj|Customary; traditional.|The community follows orthodox practices that have been passed down for generations.|unorthodox (adj): not orthodox|0
+Outspoken|adj|Frank in stating one's opinions, especially if they are critical or controversial.|The reporter was outspoken in her criticism of the president.||0
+Overlook|v|To ignore or not pay attention (to something).|Johnson overlooked a key factor in his analysis of the situation.||0
+Overt|adj|Done or shown openly; plainly or readily apparent, not secret or hidden.|The United States viewed Japan’s attack on Pearl Harbor as an overt act of war.||0
+Paradox|n|A seemingly absurd or self-contradictory statement or proposition that, when investigated, may prove to be well-founded or true.|The idea that excessive sleep can make an individual more tired may be viewed as a paradox.||0
+Partisan|adj|Tending to favor one group or one way of thinking, often without considering other perspectives.|The debate became increasingly partisan, with each side refusing to listen to the other.||0
+Paucity|n|A lack or deficiency.|It can be difficult to learn about prehistoric cultures due to the paucity of surviving evidence.||0
+Perceive|v|To become aware or conscious of something; to come to realize or understand.|She perceived a change in his behavior.|perception (n): the ability to see, hear, or become aware of something through the senses; perceptive (adj): able to perceive well|0
+Perpetuate|v|To cause something to continue indefinitely.|Spreading misinformation can perpetuate false beliefs within a society.||0
+Persist|v|To continue to exist; to continue to do something.|Though she took the medication, her symptoms persisted.||0
+Pervasive|adj|Widespread or common, often in a negative context.|Cheating has become more pervasive since the development of Chat GPT.||0
+Pessimism|n|The belief or expectation that an outcome will not be positive, favorable, or desirable.|Sara expressed pessimism about her score on the SAT, saying that she expected to fail.|pessimistic (adj): characterized by pessimism|0
+Plateau|v|To reach a stable level after a period of growth or progress.|After several weeks of rapid improvement, the patient's recovery began to plateau, showing little further change.||0
+Plausible|adj|Seeming reasonable or probable.|The detective found the suspect's story plausible.|plausibility (n): the quality of seeming reasonable or probable|0
+Posit|v|To pose, predict, or hypothesize.|The researchers posited that increased carbon dioxide would inhibit plant growth.||0
+Potent|adj|Powerful or effective; having a strong influence or impact.|The novel’s potent imagery left a lasting impression on its readers.||0
+Pragmatic|adj|Dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations.|Although it would be great to completely eliminate world hunger, we need to be pragmatic and focus on the areas in which we can make the greatest impact.||0
+Predate|v|To come before in time.|The ruins predate the rise of the Roman Empire, indicating an even earlier civilization once inhabited the region.||0
+Precarious|adj|Dangerously unstable, uncertain, or insecure.|The archaeologists crossed a precarious rope bridge to reach the newly discovered ruins on the cliffside.||0
+Precede|v|To come before in time.|Many speculate that the decline of the Aztec Empire preceded the arrival of the Spanish.|precedence (n): the condition of being considered more important; precedent (n): an earlier event or action regarded as an example or guide; unprecedented (adj): never done or known before|0
+Preclude|v|To prevent or render impossible.|Helen Keller’s physical disabilities precluded the possibility of a normal life.||0
+Predecessor|n|A person or thing that came before another in a job, role, or time.|The new president promised to reverse several unpopular policies put in place by her predecessor.||0
+Presume|v|To suppose that something is the case, generally because it is probable.|I presume that my sister will arrive late because she often runs behind schedule.||0
+Prevalent|adj|Widespread in a particular area at a particular time.|The flu was prevalent throughout the winter season.|prevalence (n): the fact or condition of being prevalent|0
+Pristine|adj|In its original, unspoiled condition; clean and untouched.|Archaeologists were thrilled to discover a pristine burial chamber, its contents undisturbed for thousands of years.||0
+Profess|v|To claim that one has (a quality or feeling), especially when this is not the case.|Despite professing that he was not racist, the governor advocated for voting restrictions that systematically disenfranchised black voters.||1
+Profound|adj|Deep or intense.|Hemingway's experience in WWI had a profound impact on his writing.||0
+Prominent|adj|Important, famous, or noticeable.|The scientist is a prominent figure in the field of genetics.||0
+Pronounced|adj|Very noticeable or marked; conspicuous.|There has been a pronounced increase in gun violence in recent decades.||0
+Proponent|n|A person who supports or advocates for a particular idea, cause, or theory.|The environmentalist was a passionate proponent of renewable energy, tirelessly advocating for its adoption to combat climate change.||0
+Provoke|v|To stimulate or incite someone to do or feel something.|His comments were intended to provoke a reaction from the audience.|provocative (adj): something that provokes|0
+Proxy|n|A person or thing that acts or stands in for someone or something else.|Scientists often use tree rings as a proxy to study historical climate conditions.||0
+Prudence|n|Careful and wise judgment that helps avoid risks or mistakes.|Her prudence in financial decisions helped the company avoid costly errors.|prudent (adj): characterized by prudence|0
+Qualify|v|To limit or modify a statement, especially by acknowledging a counterargument or different perspective.|The doctor qualified her endorsement of the allergy medication by acknowledging that it caused side effects in some patients.|qualification (n): something that qualifies|1
+Question|v|To express doubt about or challenge the truth or accuracy of something.|The scientist questioned the validity of the experiment’s results.||0
+Rebuke|v|To criticize sharply.|The editorial rebukes the government for its failure to act decisively.||0
+Rebut|v|To challenge or prove false using evidence or argument.|The lawyer effectively rebutted the witness’s claims with video footage that contradicted his testimony.||0
+Recall|v|To remember or evoke.|In the memoir, the author recalled a childhood encounter with her grandmother.||0
+Receptive|adj|Willing to consider or accept new suggestions and ideas.|The team was receptive to the manager's feedback.|receptiveness (n): the quality of being receptive|0
+Rectify|v|To correct or fix something that is wrong or problematic.|The committee implemented new procedures to rectify inconsistencies in the data collection process.||0
+Redress|v|To set right, remedy, or correct a wrong or grievance.|The company offered to redress the customer's complaint by providing a full refund.||0
+Reductive|adj|Tending to oversimplify complex ideas or issues, often in a way that distorts their true meaning.|Critics argued that the documentary offered a reductive portrayal of the conflict, ignoring its deep historical and cultural roots.||0
+Refrain|v|To stop oneself from doing something.|Though he was on a diet, Tom couldn't refrain from eating another piece of cake.||0
+Refute|v|To prove false.|The theory that Mars lacks water was refuted by findings from the new mission, which provided strong evidence of a subglacial lake.||0
+Reiterate|v|To say again, often for emphasis or clarity.|The professor reiterated the importance of citing credible sources in academic writing.||0
+Relate|v|To tell a story or give an account.|The author related an anecdote about her experiences in South Africa.||1
+Reluctant|adj|Hesitant or unwilling to do something.|Many people are reluctant to try new foods.|reluctance (n): unwillingness or disinclination to do something|0
+Repudiate|v|To reject or renounce.|The minister repudiated policies associated with previous party leaders and steered the nation in a new direction.|repudiation (n): the rejection or renunciation of something|0
+Reservations|n|Hesitance or doubt about the appropriateness of an action. (In this usage, always plural.)|Some generals voiced reservations about making air strikes on civilian neighborhoods.||1
+Resignation|n|The acceptance of something undesirable but inevitable.|He expressed resignation about his loss in the upcoming election.|resign (v): to accept something undesirable but inevitable|1
+Resilient|adj|Able to withstand or recover quickly from difficult conditions.|The resilient community rebuilt their homes after the hurricane.|resilience (n): the capacity to recover quickly from difficulties|0
+Resolute|adj|Firm and determined; unwavering in purpose or belief.|Despite the harsh conditions, the explorers remained resolute in their mission to reach the summit.||0
+Respectively|adv|In the order previously mentioned.|The two species are native to Asia and South America, respectively, reflecting their distinct evolutionary paths.||0
+Revere|v|To deeply respect or idolize.|Though condemned by the elite, Andrew Jackson was revered by uneducated farmers.|reverence (n): deep respect or admiration for someone or something|0
+Robust|adj|Strong and effective in all or most situations; sturdy or well-developed.|The scientist presented a robust set of data that supported her hypothesis across multiple experiments.||0
+Satire|n|A literary or artistic form that uses humor, irony, or exaggeration to criticize or expose flaws in individuals, institutions, or society.|The novel employs satire to highlight the absurdities of political bureaucracy.|satirical (adj): using humor, irony, or exaggeration to criticize or expose flaws|0
+Scarce|adj|Limited in quantity or availability; hard to find.|During the drought, clean drinking water became increasingly scarce across the region.||0
+Scrutinize|v|To examine carefully and critically, often in search of flaws.|The investigator scrutinized the suspect’s tax records, but could find no proof of criminal activity.|scrutiny (n): careful and critical examination|0
+Shift|n§v|A change in position, direction, or approach.§To change or move from one position, direction, or focus to another.|The scientist noted a significant shift in public opinion about climate change following the release of new data.§As food became scarce, the wolves shifted their hunting patterns to new territory.||0
+Shortage|n|A situation in which there is not enough of something that is needed.|The economic report highlighted a severe shortage of skilled labor in the technology sector.||0
+Skepticism|n|Doubt or disbelief.|Given the preponderance of fake news, it is good to view shocking headlines with a degree of skepticism.|skeptical (adj): having doubt or disbelief; skeptic (n): one who is skeptical|0
+Somber|adj|Gloomy and serious in tone or mood.|The documentary adopts a somber tone as it recounts the aftermath of the natural disaster.||0
+Speculate|v|To make a guess or prediction.|Yang speculates that in the future, AI will render human labor obsolete.|speculation (n): a guess or prediction|0
+Spontaneous|adj|Performed or occurring as a result of a sudden inner impulse or without premeditation.|The study documented a spontaneous genetic mutation in the organism, which led to an unexpected change in coloration.||0
+Sporadic|adj|Occurring at irregular intervals or only in a few places.|Sporadic cases of the disease were reported across the country.||0
+Stagnate|v|To cease developing, progressing, or moving; to become inactive.|Without fresh ideas, the company’s growth began to stagnate, losing its competitive edge.||0
+Staple|n|A basic or essential item.|Wheat is a dietary staple examined in the study’s analysis of food security.||0
+Status quo|n|The existing state of affairs, especially regarding social or political issues.|Southern politicians argued that desegregation would threaten the status quo and lead to chaos.||0
+Strenuous|adj|Requiring or using great effort or exertion.|Strenuous activity can improve cardiovascular health.||0
+Subjective|adj|Based on personal opinions or feelings rather than on pure facts.|Art is mostly subjective: a work of art that one person finds beautiful, another person might find hideous.||0
+Subsequent|adj|Coming later; following in order or time.|The subsequent ruler of the ancient civilization implemented reforms that reversed many of his predecessor’s policies.||0
+Subside|v|To become less intense, violent, or severe.|The storm gradually subsided, leaving behind clear skies.||0
+Subsist|v|To maintain or support oneself, especially at a minimal level.|Many families in the village subsist on farming.|subsistence (n): the action or fact of maintaining or supporting oneself at a minimal level|0
+Substantial|adj|Large or significant.|The impact of burning fossil fuels on the climate is substantial.||0
+Substantiate|v|To support, often with evidence.|Katz offered no evidence to substantiate his claim.|substantiated (adj): supported by evidence|0
+Subtle|adj|Not obvious; delicate or precise.|The painting’s subtle symbolism invites varied interpretations.||0
+Subvert|v|To undermine or overthrow something established, such as a system, authority, or belief.|The revolutionary group aimed to subvert the corrupt regime by spreading dissent and encouraging civil disobedience.||0
+Susceptible|adj|Likely or liable to be influenced or harmed by a particular thing.|Children are particularly susceptible to the disease.|susceptibility (n): the state of being likely or liable to be influenced or harmed|0
+Suffrage|n|The right to vote.|Many feel that suffrage should be extended to sixteen-year-olds.||0
+Superficial|adj|On the surface; shallow; not significant.|The historian criticized the report for providing only a superficial analysis of the ancient artifact, ignoring its deeper cultural meaning.||0
+Superfluous|adj|More than is needed or necessary; unnecessary.|The report included superfluous details that distracted from the main argument.||0
+Supplant|v|To replace or take the place of.|Digital technology has largely supplanted traditional methods of communication in modern society.||0
+Surmise|v|To suppose that something is true.|Biologists have surmised that habitat destruction could be accelerating evolutionary changes.||0
+Surpass|v|To go beyond in amount, quality, or achievement.|The novel’s unexpected popularity and critical acclaim allowed it to surpass all previous sales records in the publishing house’s history.||0
+Surplus|n|An amount that is more than what is needed or used.|The government stored the agricultural surplus in preparation for future shortages.||0
+Sustain|v|To maintain or keep something going over time.|The ancient irrigation system sustained the farmland through long periods of drought.||0
+Synthesize|v|To combine (a number of things) into a coherent whole.|The researcher synthesized the data from multiple studies.|synthesis (n): the combination of components to form a connected whole; synthetic (adj): created by humans rather than existing naturally|0
+Tangential|adj|Only slightly relevant or related.|Her remarks were tangential to the main point of the discussion.||0
+Tedious|adj|Tiresome, boring, or monotonous due to being repetitive or lengthy.|The data entry task was incredibly tedious, requiring hours of mind-numbingly repetitive work.||0
+Tenable|adj|Able to be defended or maintained against attack or objection.|The scientist presented a tenable theory that withstood intense peer review.|untenable (adj): not able to be defended or maintained against attack or objection|0
+Tentative|adj|Not certain or fixed.|Until more studies can be conducted, the findings are only tentative.||0
+Tenuous|adj|Very weak or slight.|Researchers have found only a tenuous link between IQ and emotional intelligence.||0
+Thwart|v|To prevent someone from accomplishing something; to oppose successfully.|A technical error thwarted the researcher’s plans to accurately analyze the samples.||0
+Trivial|adj|Small or of little importance.|The debate focused on trivial details rather than the main issue.||0
+Ubiquitous|adj|Present, appearing, or found everywhere.|Surveillance technologies have become ubiquitous in modern urban environments.||0
+Unanimous|adj|Fully in agreement; showing complete unity in opinion or decision.|The committee reached a unanimous decision to fund the proposed environmental study.||0
+Undermine|v|To weaken or go against something, such as an argument or theory.|The new evidence undermined traditional assumptions about language acquisition.||0
+Underscore|v|To emphasize.|The author underscored the need for bipartisanship.||0
+Understate|v|To describe or represent (something) as being smaller or less important than it actually is.|The report understated the severity of the problem.||0
+Unfounded|adj|Having no basis in fact; unsupported by reason or logic.|The beliefs of flat-earthers are completely unfounded.||0
+Uniform|adj|Remaining the same in all cases and at all times; unchanging in form or character.|The scientist recorded uniform results across multiple trials, strengthening the reliability of the findings.||0
+Unique|adj|One of a kind; unlike anything else.|The artist’s unique style made her paintings instantly recognizable in the gallery.||0
+Universal|adj|Existing everywhere or applying to all.|Some believe that the government should provide universal healthcare to its citizens.||0
+Uphold|v|To support or maintain, especially over time.|Many indigenous communities continue to uphold ancient traditions, passing them down from one generation to the next.||0
+Viable|adj|Capable of working successfully or surviving.|The proposal outlines a viable alternative to traditional energy sources.|viability (n): the ability to work successfully or to survive|0
+Validate|v|To prove or confirm.|The results of the experiment validated the researcher’s hypothesis.|invalidate (v): to disprove|0
+Venerate|v|To regard with deep respect or reverence.|Many cultures venerate their ancestors through special ceremonies and rituals.||0
+Verify|v|To prove or determine something is true.|His conclusions have been verified by further experiments.||0
+Vindicate|v|To clear from blame, justify, or prove.|New evidence helped vindicate the scientist’s controversial theory.||0
+Violate|v|To break or fail to comply with a rule, law, or agreement.|The company was fined after it violated environmental regulations by dumping waste improperly.||0
+Virtuous|adj|Having or showing high moral standards.|She was known for her virtuous conduct and integrity.|virtue (n): a good quality, especially one related to morals|0
+Vulnerable|adj|Susceptible to physical or emotional attack or harm.|Children are particularly vulnerable to the disease.|vulnerability (n): the quality or state of being exposed to the possibility of being attacked or harmed|0
+Wary|adj|Cautious or careful about possible dangers or problems.|Scientists remain wary of the new drug’s side effects until further testing is completed.||0
+Widespread|adj|Found or distributed over a large area or number of people.|The widespread use of smartphones has changed how people communicate.||0
+Wither|v|To become dry and shriveled.|The plants withered in the heat of the sun.||0
+Zeal|n|Great energy or enthusiasm in pursuit of a cause or an objective.|His zeal for the project was infectious.|zealous (adj): having or showing zeal|0
+Zenith|n|The peak or the time at which something is most successful.|The empire was at its zenith during the third century BCE.||0`;
+const WORDS = RAW.trim().split("\n").map((ln,i)=>{
+  const [word,pos,def,ex,rel,star]=ln.split("|");
+  return {id:i,word,pos:pos.split("§"),def:def.split("§"),ex:ex.split("§"),rel,star:star==="1"};
+});
+const POSNAME={v:"verb",n:"noun",adj:"adjective",adv:"adverb"};
+const KEY="sat-vocab-flashcards-v1";
+let status={}, filter="all", mode="word", shuffled=false, order=[], idx=0, flipped=false;
+
+try{ const s=JSON.parse(localStorage.getItem(KEY)||"{}"); status=s.status||{}; mode=s.mode||"word"; shuffled=!!s.shuffled; }catch(e){}
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify({status,mode,shuffled})); }catch(e){} }
+
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function hl(ex,word){
+  const stem=word.slice(0,Math.max(4,word.length-3)).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  const re=new RegExp("\\b("+stem+"\\w*)","gi");
+  return esc(ex).replace(re,"<mark>$1</mark>");
+}
+function shuf(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function build(keepId){
+  let list=WORDS.filter(w=>{
+    const s=status[w.id];
+    if(filter==="new") return !s;
+    if(filter==="l") return s==="l";
+    if(filter==="k") return s==="k";
+    if(filter==="star") return w.star;
+    return true;
+  }).map(w=>w.id);
+  if(shuffled) shuf(list);
+  order=list;
+  idx = keepId!=null && order.includes(keepId) ? order.indexOf(keepId) : 0;
+  flipped=false;
+  render();
+}
+
+function posLabel(p){ return POSNAME[p]||p; }
+
+function render(){
+  const total=WORDS.length;
+  const k=Object.values(status).filter(v=>v==="k").length;
+  const l=Object.values(status).filter(v=>v==="l").length;
+  $("bk").style.width=(k/total*100)+"%"; $("bl").style.width=(l/total*100)+"%";
+  $("stats").innerHTML=`<span><b>${k}</b> got it</span><span><b>${l}</b> still learning</span><span><b>${total-k-l}</b> not yet seen</span>`;
+
+  $("mode").textContent="Showing: "+(mode==="word"?"word first":"definition first");
+  $("shuffle").textContent="Shuffle: "+(shuffled?"on":"off");
+  $("shuffle").setAttribute("aria-pressed",shuffled);
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.f===filter));
+
+  const card=$("card");
+  const has=order.length>0;
+  $("prev").disabled=$("next").disabled=$("bl2").disabled=$("bg2").disabled=!has;
+  if(!has){
+    card.className="card"; 
+    card.innerHTML=`<div class="face front"><div class="top"><span></span></div><div class="body empty">No cards in this deck yet.<br>Pick another filter above.</div></div>`;
+    $("pos").textContent="0 / 0"; $("done").textContent=""; return;
+  }
+  const w=WORDS[order[idx]];
+  const s=status[w.id];
+  $("pos").innerHTML=`${idx+1} / ${order.length}`;
+
+  const posTxt=w.pos.map(posLabel).join(" / ");
+  const star=w.star?`<span class="star">★ tricky meaning</span>`:`<span></span>`;
+  const dot=`<span><span class="status ${s||""}"></span>${s==="k"?"Got it":s==="l"?"Still learning":"New"}</span>`;
+
+  const wordSide=`<div class="body"><h2 class="word">${esc(w.word)}</h2><div class="pos">${posTxt}</div><div class="hint">Tap to flip</div></div>`;
+  const senses=w.def.map((d,i)=>{
+    const p=w.pos[i]||w.pos[0];
+    const tag=w.def.length>1?`<span class="pos">${i+1}. ${posLabel(p)}</span><br>`:"";
+    return `<div class="sense">${tag}<p class="def">${esc(d)}</p><p class="ex">${hl(w.ex[i]||w.ex[0],w.word)}</p></div>`;
+  }).join("");
+  const rel=w.rel?`<div class="rel"><b>Related:</b> ${esc(w.rel)}</div>`:"";
+  const defSide=`<div class="body">${w.def.length===1?`<p class="pos" style="margin:0 0 6px">${posTxt}</p>`:""}${senses}${rel}</div>`;
+
+  const frontBody = mode==="word"
+    ? wordSide
+    : `<div class="body"><p class="def" style="font-size:1.35rem">${w.def.map(esc).join("<br><br>")}</p><div class="hint">What word is this? Tap to flip</div></div>`;
+  const backBody = mode==="word"
+    ? `<div class="body" style="padding-top:46px">${defSide.replace('<div class="body">','').replace(/<\/div>$/,'')}</div>`
+    : `<div class="body" style="padding-top:46px"><h2 class="word" style="text-align:left;font-size:2.2rem">${esc(w.word)}</h2><div class="pos" style="margin-bottom:12px">${posTxt}</div>${senses.replace(/<p class="def">.*?<\/p>/g,"")}${rel}</div>`;
+
+  card.className="card"+(flipped?" flipped":"");
+  card.setAttribute("aria-label",`Flashcard ${idx+1} of ${order.length}. ${mode==="word"?w.word:"definition"}. Press to flip.`);
+  card.innerHTML=
+   `<div class="face front"><div class="top">${star}${dot}</div>${frontBody.replace('class="body"', 'class="body" style="padding-top:44px"')}</div>`+
+   `<div class="face back"><div class="top">${star}${dot}</div>${backBody}</div>`;
+  $("done").textContent = (order.length && order.every(id=>status[id]==="k")) ? "Every card in this deck is marked Got it." : "";
+}
+
+function flip(){ if(!order.length) return; flipped=!flipped; $("card").classList.toggle("flipped",flipped); }
+function go(d){
+  if(!order.length) return;
+  idx=(idx+d+order.length)%order.length; flipped=false; render();
+}
+function mark(v){
+  if(!order.length) return;
+  const id=order[idx];
+  status[id]=v; save();
+  // If the active filter would now drop this card, rebuild deck keeping position.
+  if(filter==="new"||filter==="l"||filter==="k"){
+    const pos=idx; order.splice(idx,1);
+    if(!order.length){ render(); return; }
+    idx=Math.min(pos,order.length-1); flipped=false; render();
+  } else { go(1); }
+}
+
+$("card").addEventListener("click",flip);
+$("prev").onclick=()=>go(-1); $("next").onclick=()=>go(1);
+$("bl2").onclick=()=>mark("l"); $("bg2").onclick=()=>mark("k");
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{filter=c.dataset.f; build();});
+$("mode").onclick=()=>{mode=mode==="word"?"def":"word"; save(); flipped=false; render();};
+$("shuffle").onclick=()=>{shuffled=!shuffled; save(); build(order[idx]);};
+$("reset").onclick=()=>{ if(confirm("Clear your Got it / Still learning marks?")){status={}; save(); build();} };
+
+const sel=$("letter");
+sel.innerHTML='<option value="">Jump to…</option>'+[...new Set(WORDS.map(w=>w.word[0].toUpperCase()))].map(L=>`<option>${L}</option>`).join("");
+sel.onchange=()=>{
+  if(!sel.value) return;
+  filter="all"; shuffled=false; save(); build();
+  const t=WORDS.find(w=>w.word[0].toUpperCase()===sel.value);
+  idx=order.indexOf(t.id); render(); sel.value="";
+};
+
+document.addEventListener("keydown",e=>{
+  if(e.target.tagName==="SELECT") return;
+  if(e.key===" "||e.key==="Enter"){ if(e.target.tagName==="BUTTON"&&e.target.id!=="card") return; e.preventDefault(); flip(); }
+  else if(e.key==="ArrowRight") go(1);
+  else if(e.key==="ArrowLeft") go(-1);
+  else if(e.key==="l"||e.key==="L") mark("l");
+  else if(e.key==="g"||e.key==="G") mark("k");
+});
+
+build();
+</script>
+</body>
+</html>
