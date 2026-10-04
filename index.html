@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -64,7 +64,6 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 .word{font:700 clamp(2.2rem,9vw,3.6rem)/1.05 "Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;letter-spacing:-.02em;margin:0;overflow-wrap:anywhere}
 .word.sm{font-size:clamp(1.8rem,7vw,2.4rem);text-align:left}
 .hint{margin-top:18px;font:500 .8rem "Bricolage Grotesque",Arial,sans-serif;color:var(--ink-2)}
-.star{color:var(--margin);font-weight:700}
 .pri-tag{background:var(--chip-on);color:var(--chip-on-ink);border-radius:5px;padding:1px 8px;font-weight:700;letter-spacing:.01em}
 .role{margin:0 0 12px;font:italic 400 .92rem "Source Serif 4",Georgia,serif;color:var(--ink-2)}
 .sense{margin:0 0 14px}
@@ -90,6 +89,39 @@ kbd{font:500 .78rem "Bricolage Grotesque",Arial,sans-serif;background:var(--chip
 .speak{position:absolute;left:12px;bottom:12px;width:46px;height:46px;border-radius:50%;border:0;padding:0;background:var(--chip-on);color:var(--chip-on-ink);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 6px 16px -6px rgba(27,40,80,.6)}
 .speak[hidden]{display:none}
 .speak.on{background:var(--margin);color:#fff}
+.quiz{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.quiz[hidden]{display:none}
+.quiz-inner{max-width:640px;margin:0 auto;padding:18px 16px 48px}
+.quiz-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.quiz-head h2{font:700 1.4rem "Bricolage Grotesque",Arial,sans-serif;margin:0}
+.qmeta{display:flex;justify-content:space-between;font:500 .85rem "Bricolage Grotesque",Arial,sans-serif;color:var(--ink-2);margin:0 0 6px}
+.qbar{height:8px;background:var(--chip);border-radius:99px;overflow:hidden;margin-bottom:16px}
+.qbar i{display:block;height:100%;background:var(--chip-on);transition:width .25s}
+.qprompt{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;font-size:1.2rem;line-height:1.45;margin-bottom:14px;box-shadow:var(--shadow)}
+.qprompt:focus{outline:none}
+.qword{font:700 1.7rem "Bricolage Grotesque",Arial,sans-serif;display:inline-block;overflow-wrap:anywhere}
+.qdef{font-weight:600}
+.opt{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;margin:0 0 10px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:400 1.05rem/1.4 "Source Serif 4",Georgia,serif;cursor:pointer}
+.opt:disabled{cursor:default}
+.opt .k{flex:none;width:26px;height:26px;border-radius:7px;background:var(--chip);display:flex;align-items:center;justify-content:center;font:700 .85rem "Bricolage Grotesque",Arial,sans-serif}
+.opt .t{flex:1;overflow-wrap:anywhere}
+.opt .tag{flex:none;font:700 .78rem "Bricolage Grotesque",Arial,sans-serif;margin-left:auto;padding-left:8px}
+.opt.right{box-shadow:inset 0 0 0 2px var(--ok)} .opt.right .tag{color:var(--ok)}
+.opt.wrong{box-shadow:inset 0 0 0 2px var(--learn)} .opt.wrong .tag{color:var(--learn)}
+.opt.dim{opacity:.6}
+.fb{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:8px;padding:12px 14px;margin:4px 0 14px;line-height:1.5}
+.fb.bad{border-left-color:var(--learn)}
+.fb b{font-family:"Bricolage Grotesque",Arial,sans-serif}
+.fb .ex{font-size:.95rem;line-height:1.5;margin-top:4px;color:var(--ink-2)}
+.score{font:700 clamp(2.4rem,9vw,3.4rem)/1 "Bricolage Grotesque",Arial,sans-serif;margin:6px 0 2px}
+.scoresub{color:var(--ink-2);margin:0 0 14px}
+.misses{margin:14px 0 18px;padding:0;list-style:none}
+.misses li{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:8px;line-height:1.45}
+.misses .mw{font:700 1.05rem "Bricolage Grotesque",Arial,sans-serif}
+.misses .you{display:block;margin-top:3px;font-size:.88rem;color:var(--ink-2)}
+.qform{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:10px 0 16px}
+.qform input[type=number]{font:400 1.1rem "Source Serif 4",Georgia,serif;background:var(--field);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:110px}
+.qform label{display:block;font:500 .85rem "Bricolage Grotesque",Arial,sans-serif;color:var(--ink-2);margin-bottom:6px}
 .status{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--line)}
 .status.k{background:var(--ok)} .status.l{background:var(--learn)}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:18px;box-shadow:var(--shadow)}
@@ -135,12 +167,19 @@ kbd{font:500 .78rem "Bricolage Grotesque",Arial,sans-serif;background:var(--chip
       <button class="chip" data-f="new" aria-pressed="false">Not yet seen</button>
       <button class="chip" data-f="l" aria-pressed="false">Still learning</button>
       <button class="chip" data-f="k" aria-pressed="false">Got it</button>
-      <button class="chip" data-f="star" aria-pressed="false">★ Tricky meanings</button>
     </div>
     <div class="group">
       <button class="btn" id="mode">Showing: word first</button>
       <button class="btn" id="shuffle" aria-pressed="false">Shuffle: off</button>
+      <button class="btn primary" id="quizBtn">Take a quiz</button>
       <select id="letter" aria-label="Jump to letter"></select>
+    </div>
+  </div>
+
+  <div class="quiz" id="quiz" role="dialog" aria-modal="true" aria-labelledby="quizTitle" hidden>
+    <div class="quiz-inner">
+      <div class="quiz-head"><h2 id="quizTitle">Quiz</h2><button class="btn" id="quizClose">Close</button></div>
+      <div id="quizBody"></div>
     </div>
   </div>
 
@@ -748,10 +787,10 @@ RAW_ROOTS.trim().split("\n").forEach(ln=>{
   BASE.push({id:"a"+id,kind,term,key:term,word:fmtTerm(kind,term),labels:[label],def:[meaning],ex:[],rel:"",eg,star:false,pri:false});
 });
 
-let status={}, custom=[], deck="all", filter="all", mode="word", shuffled=false, order=[], idx=0, flipped=false, editingId=null;
-try{ const s=JSON.parse(localStorage.getItem(KEY)||"{}"); status=s.status||{}; mode=s.mode||"word"; shuffled=!!s.shuffled; }catch(e){}
+let status={}, stats={}, custom=[], deck="all", filter="all", mode="word", shuffled=false, order=[], idx=0, flipped=false, editingId=null;
+try{ const s=JSON.parse(localStorage.getItem(KEY)||"{}"); status=s.status||{}; stats=s.stats||{}; mode=s.mode||"word"; shuffled=!!s.shuffled; }catch(e){}
 try{ const c=JSON.parse(localStorage.getItem(CKEY)||"[]"); if(Array.isArray(c)) custom=c.filter(x=>x&&typeof x.word==="string"&&typeof x.def==="string"); }catch(e){}
-function save(){ try{ localStorage.setItem(KEY,JSON.stringify({status,mode,shuffled})); }catch(e){} }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify({status,stats,mode,shuffled})); }catch(e){} }
 function saveCustom(){ try{ localStorage.setItem(CKEY,JSON.stringify(custom)); }catch(e){} }
 
 let CARDS=[], BYID={};
@@ -780,6 +819,7 @@ function hlEg(w){
   return txt.replace(re,"<mark>$1</mark>");
 }
 function shuf(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+const isSeen=id=>!!status[id]||!!(stats[id]&&stats[id].seen);
 const inDeck=c=>deck==="all"||(deck==="priority"?c.pri:c.kind===deck);
 
 /* ---------- deck building ---------- */
@@ -787,10 +827,9 @@ function build(keepId){
   let list=CARDS.filter(c=>{
     if(!inDeck(c)) return false;
     const s=status[c.id];
-    if(filter==="new") return !s;
+    if(filter==="new") return !isSeen(c.id);
     if(filter==="l") return s==="l";
     if(filter==="k") return s==="k";
-    if(filter==="star") return c.star;
     return true;
   }).map(c=>c.id);
   if(shuffled){ const P=shuf(list.filter(id=>BYID[id].pri)), R=shuf(list.filter(id=>!BYID[id].pri)); list=P.concat(R); }
@@ -824,7 +863,7 @@ function render(){
   const inD=CARDS.filter(inDeck);
   const k=inD.filter(c=>status[c.id]==="k").length, l=inD.filter(c=>status[c.id]==="l").length, total=inD.length||1;
   $("bk").style.width=(k/total*100)+"%"; $("bl").style.width=(l/total*100)+"%";
-  $("stats").innerHTML=`<span><b>${k}</b> got it</span><span><b>${l}</b> still learning</span><span><b>${inD.length-k-l}</b> not yet seen</span>`;
+  $("stats").innerHTML=`<span><b>${k}</b> got it</span><span><b>${l}</b> still learning</span><span><b>${inD.filter(c=>!isSeen(c.id)).length}</b> not yet seen</span>`;
   const counts={all:CARDS.length,priority:CARDS.filter(c=>c.pri).length}; CARDS.forEach(c=>counts[c.kind]=(counts[c.kind]||0)+1);
   document.querySelectorAll("[data-d]").forEach(b=>{ b.setAttribute("aria-pressed",b.dataset.d===deck); b.querySelector(".n").textContent=counts[b.dataset.d]||0; });
   document.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===filter));
@@ -847,7 +886,7 @@ function render(){
   $("pos").textContent=`${idx+1} / ${order.length}`;
   $("mineActions").hidden=w.kind!=="mine";
 
-  const left=`<span class="left"><span>${KINDLABEL[w.kind]}</span>${w.pri?`<span class="pri-tag">priority</span>`:""}${w.star?`<span class="star">★ tricky meaning</span>`:""}</span>`;
+  const left=`<span class="left"><span>${KINDLABEL[w.kind]}</span>${w.pri?`<span class="pri-tag">priority</span>`:""}</span>`;
   const dot=`<span><span class="status ${s||""}"></span>${s==="k"?"Got it":s==="l"?"Still learning":"New"}</span>`;
   const lab=w.labels.length?`<div class="pos">${labelTxt(w)}</div>`:"";
   const askKind={word:"word",root:"root",prefix:"prefix",suffix:"suffix",mine:"word"}[w.kind];
@@ -903,12 +942,154 @@ function playCurrent(){
   }catch(e){ done(); }
 }
 
+
+/* ---------- quiz ---------- */
+let Q=null;
+function weight(c){
+  const s=stats[c.id]||{}, st=status[c.id];
+  let w=1;
+  if(st==="l") w+=4;
+  w+=2.5*(s.wrong||0);
+  if(s.last==="w") w+=3;
+  if(st==="k") w-=0.5;
+  w-=0.4*Math.min(s.streak||0,3);
+  return Math.max(0.25,w);
+}
+function sampleWeighted(cards,n){
+  const pool=cards.map(c=>({c,w:weight(c)})), out=[];
+  while(out.length<n&&pool.length){
+    const tot=pool.reduce((a,x)=>a+x.w,0);
+    let r=Math.random()*tot, k=0;
+    for(;k<pool.length;k++){ r-=pool[k].w; if(r<=0) break; }
+    if(k>=pool.length) k=pool.length-1;
+    out.push(pool.splice(k,1)[0].c);
+  }
+  return out;
+}
+const lc=s=>s.replace(/^([A-Z])([a-z])/,(m,a,b)=>a.toLowerCase()+b);
+const groupOf=c=>["root","prefix","suffix"].includes(c.kind)?c.kind:"word";
+function makeQuestion(c){
+  const sense=Math.floor(Math.random()*c.def.length);
+  const dir=Math.random()<.5?"w2d":"d2w";
+  const g=groupOf(c), lab=c.labels[sense]||c.labels[0]||"";
+  const correct=c.def[sense].trim(), correctKey=(dir==="w2d"?correct:c.word).toLowerCase();
+  const cand=shuf(CARDS.filter(x=>x.id!==c.id&&groupOf(x)===g&&x.word.toLowerCase()!==c.word.toLowerCase()));
+  const sorted=cand.filter(x=>(x.labels[0]||"")===lab).concat(cand.filter(x=>(x.labels[0]||"")!==lab));
+  const seenTxt=new Set([correctKey]), opts=[];
+  for(const x of sorted){
+    if(opts.length>=3) break;
+    const txt=dir==="w2d"?x.def[Math.floor(Math.random()*x.def.length)].trim():x.word;
+    if(seenTxt.has(txt.toLowerCase())) continue;
+    seenTxt.add(txt.toLowerCase()); opts.push({text:txt,correct:false});
+  }
+  opts.push({text:dir==="w2d"?correct:c.word,correct:true});
+  shuf(opts);
+  return {id:c.id,dir,sense,lab,opts};
+}
+function promptHTML(q,c){
+  const kw={root:"root",prefix:"prefix",suffix:"suffix"}[c.kind]||"word";
+  const hint=c.def.length>1&&q.lab?` (${esc(q.lab)})`:"";
+  return q.dir==="w2d"
+    ? `What does the ${kw} <span class="qword">${esc(c.word)}</span> mean${hint}?`
+    : `Which ${kw} means <span class="qdef">“${esc(c.def[q.sense])}”</span>${hint}?`;
+}
+function quizOpen(){ return !$("quiz").hidden; }
+function openQuiz(){
+  Q=null; renderQuiz(); $("quiz").hidden=false; document.body.style.overflow="hidden"; $("quiz").scrollTop=0;
+  const f=$("quizBody").querySelector("[data-focus]"); if(f) f.focus();
+}
+function closeQuiz(){
+  $("quiz").hidden=true; document.body.style.overflow=""; Q=null;
+  build(order[idx]);
+}
+function renderQuiz(){
+  const body=$("quizBody");
+  if(!Q){
+    const seen=CARDS.filter(c=>isSeen(c.id)), S=seen.length;
+    $("quizTitle").textContent="Quiz"; $("quizClose").textContent="Close";
+    if(S<1){ body.innerHTML=`<p>You haven't seen any cards yet. Flip a few cards or mark them Got it / Still learning, then come back for a quiz.</p><button class="btn primary" data-act="close" data-focus>Back to cards</button>`; return; }
+    const weak=seen.filter(c=>status[c.id]==="l"||(stats[c.id]&&stats[c.id].wrong)).length;
+    const def=Math.min(10,S);
+    const presets=[5,10,15,20].filter(n=>n<S).map(n=>`<button class="chip" data-act="preset" data-n="${n}">${n}</button>`).join("")+`<button class="chip" data-act="preset" data-n="${S}">All ${S}</button>`;
+    body.innerHTML=`<p>You've seen <b>${S}</b> card${S===1?"":"s"}. ${weak?`<b>${weak}</b> of them ${weak===1?"is a weak spot":"are weak spots"} (marked Still learning or missed in a quiz), and the quiz asks about those more often.`:"Words you mark Still learning or miss in a quiz will come up more often in future quizzes."}</p>
+      <div class="qform"><label for="qCount">How many words do you want to be tested on? (1 to ${S})</label>
+        <input id="qCount" type="number" min="1" max="${S}" value="${def}" data-focus>
+        <div class="group" style="margin-top:10px">${presets}</div></div>
+      <button class="btn primary" data-act="start" style="padding:12px 18px">Start quiz</button>`;
+    return;
+  }
+  const total=Q.items.length;
+  if(Q.i>=total){
+    const wrong=Q.results.filter(r=>!r.correct), right=total-wrong.length, pct=Math.round(right/total*100);
+    $("quizTitle").textContent="Results"; $("quizClose").textContent="Done";
+    body.innerHTML=`<div class="score" data-focus tabindex="-1">${right} / ${total}</div>
+      <p class="scoresub">${right} right, ${wrong.length} wrong (${pct}%).</p>
+      ${wrong.length?`<h3 style="font:700 1rem 'Bricolage Grotesque',Arial,sans-serif;margin:0">Missed</h3><ul class="misses">${wrong.map(r=>`<li><span class="mw">${esc(r.word)}</span> means ${esc(lc(r.meaning))}<span class="you">You chose: ${esc(r.chosen)}</span></li>`).join("")}</ul>`:`<p>You didn't miss any. Nice work.</p>`}
+      <div class="actions">${wrong.length?`<button class="btn primary" data-act="retry">Retry the ${wrong.length} missed</button>`:""}<button class="btn ${wrong.length?"":"primary"}" data-act="again">New quiz</button><button class="btn" data-act="close">Done</button></div>`;
+    return;
+  }
+  const q=Q.items[Q.i], c=BYID[q.id], answered=Q.picked!=null;
+  $("quizTitle").textContent="Quiz"; $("quizClose").textContent="End quiz";
+  const opts=q.opts.map((o,i)=>{
+    let cls="opt", tag="";
+    if(answered){
+      if(o.correct){ cls+=" right"; tag=`<span class="tag">Correct answer</span>`; }
+      else if(i===Q.picked){ cls+=" wrong"; tag=`<span class="tag">Your answer</span>`; }
+      else cls+=" dim";
+    }
+    return `<button class="${cls}" data-act="pick" data-i="${i}" ${answered?"disabled":""}><span class="k">${i+1}</span><span class="t">${esc(o.text)}</span>${tag}</button>`;
+  }).join("");
+  let fb="";
+  if(answered){
+    const ok=q.opts[Q.picked].correct, ex=c.ex[q.sense]||c.ex[0]||"";
+    fb=`<div class="fb ${ok?"":"bad"}" role="status"><b>${ok?"Correct.":"Not quite."}</b> ${esc(c.word)} means ${esc(lc(c.def[q.sense]))}${ex?`<div class="ex">${hl(ex,c.word)}</div>`:""}</div>
+      <button class="btn primary" data-act="next" data-focus style="padding:12px 18px">${Q.i+1<total?"Next question":"See results"}</button>`;
+  }
+  body.innerHTML=`<div class="qmeta"><span>Question ${Q.i+1} of ${total}</span><span>${Q.results.filter(r=>r.correct).length} correct so far</span></div>
+    <div class="qbar" aria-hidden="true"><i style="width:${(Q.i+(answered?1:0))/total*100}%"></i></div>
+    <div class="qprompt" tabindex="-1" ${answered?"":"data-focus"}>${promptHTML(q,c)}</div>${opts}${fb}`;
+}
+function startQuiz(cards){
+  Q={items:cards.map(makeQuestion),i:0,results:[],picked:null};
+  renderQuiz(); $("quiz").scrollTop=0;
+  const f=$("quizBody").querySelector("[data-focus]"); if(f) f.focus();
+}
+function pickAnswer(i){
+  if(!Q||Q.picked!=null) return;
+  const q=Q.items[Q.i], c=BYID[q.id], o=q.opts[i];
+  Q.picked=i;
+  const right=q.opts.find(x=>x.correct);
+  Q.results.push({id:q.id,correct:o.correct,word:c.word,meaning:c.def[q.sense],chosen:o.text,answer:right.text});
+  const s=stats[q.id]||(stats[q.id]={}); s.seen=true;
+  if(o.correct){ s.right=(s.right||0)+1; s.streak=(s.streak||0)+1; s.last="r"; }
+  else { s.wrong=(s.wrong||0)+1; s.streak=0; s.last="w"; status[q.id]="l"; }
+  save(); renderQuiz();
+  const f=$("quizBody").querySelector("[data-focus]"); if(f) f.focus();
+}
+$("quizBtn").onclick=openQuiz;
+$("quizClose").onclick=closeQuiz;
+$("quizBody").addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]"); if(!b) return;
+  const act=b.dataset.act;
+  if(act==="preset"){ $("qCount").value=b.dataset.n; }
+  else if(act==="start"){
+    const seen=CARDS.filter(c=>isSeen(c.id)), n=Math.max(1,Math.min(seen.length,parseInt($("qCount").value,10)||1));
+    startQuiz(sampleWeighted(seen,n));
+  }
+  else if(act==="pick") pickAnswer(+b.dataset.i);
+  else if(act==="next"){ Q.i++; Q.picked=null; renderQuiz(); $("quiz").scrollTop=0; const f=$("quizBody").querySelector("[data-focus]"); if(f) f.focus(); }
+  else if(act==="retry"){ const cards=Q.results.filter(r=>!r.correct).map(r=>BYID[r.id]).filter(Boolean); startQuiz(cards); }
+  else if(act==="again"){ Q=null; renderQuiz(); const f=$("quizBody").querySelector("[data-focus]"); if(f) f.focus(); }
+  else if(act==="close") closeQuiz();
+});
+$("quizBody").addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="qCount"){ e.preventDefault(); const b=$("quizBody").querySelector('[data-act="start"]'); if(b) b.click(); } });
+
 /* ---------- actions ---------- */
-function flip(){ if(!order.length) return; flipped=!flipped; $("card").classList.toggle("flipped",flipped); updateSpeak(); }
+function flip(){ if(!order.length) return; flipped=!flipped; if(flipped){ const id=order[idx]; (stats[id]||(stats[id]={})).seen=true; save(); } $("card").classList.toggle("flipped",flipped); updateSpeak(); }
 function go(d){ if(canSpeak) try{ speechSynthesis.cancel(); }catch(e){} $("speak").classList.remove("on"); if(!order.length) return; idx=(idx+d+order.length)%order.length; flipped=false; render(); }
 function mark(v){
   if(!order.length) return;
-  status[order[idx]]=v; save();
+  status[order[idx]]=v; (stats[order[idx]]||(stats[order[idx]]={})).seen=true; save();
   if(filter==="new"||filter==="l"||filter==="k"){
     const p=idx; order.splice(idx,1);
     if(!order.length){ render(); return; }
@@ -975,6 +1156,11 @@ $("delBtn").onclick=()=>armConfirm($("delBtn"),"Select again to delete",()=>{
 });
 
 document.addEventListener("keydown",e=>{
+  if(quizOpen()){
+    if(e.key==="Escape"){ closeQuiz(); return; }
+    if(/^[1-4]$/.test(e.key)&&e.target.tagName!=="INPUT"&&Q&&Q.items&&Q.i<Q.items.length) pickAnswer(+e.key-1);
+    return;
+  }
   if(e.key==="Escape"&&!$("addPanel").hidden){ closeAdd(); return; }
   const t=e.target.tagName;
   if(t==="SELECT"||t==="INPUT"||t==="TEXTAREA") return;
