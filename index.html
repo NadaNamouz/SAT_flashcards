@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -49,7 +49,7 @@ h1{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;font-weig
 .btn.warn{background:var(--learn);color:#fff}
 button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,.card:focus-visible{outline:3px solid var(--margin);outline-offset:2px}
 .pos{font:italic 400 1rem "Source Serif 4",Georgia,serif;color:var(--ink-2)}
-.scene{perspective:1400px}
+.scene{perspective:1400px;position:relative}
 .card{display:grid;width:100%;min-height:340px;border:0;padding:0;background:none;cursor:pointer;text-align:left;font:inherit;color:inherit;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.3,.7,.2,1);border-radius:10px}
 .card.flipped{transform:rotateY(180deg)}
 .face{position:relative;grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border-radius:10px;box-shadow:var(--shadow);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden}
@@ -59,7 +59,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 .face::before{content:"";position:absolute;left:0;right:0;top:46px;height:2px;background:var(--margin)}
 .top{height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font:500 .8rem "Bricolage Grotesque",Arial,sans-serif;color:var(--ink-2);background:var(--card)}
 .top .left{display:flex;gap:12px;align-items:center}
-.body{padding:46px 24px 26px;flex:1}
+.body{padding:46px 24px 66px;flex:1}
 .front .body{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding-top:44px}
 .word{font:700 clamp(2.2rem,9vw,3.6rem)/1.05 "Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;letter-spacing:-.02em;margin:0;overflow-wrap:anywhere}
 .word.sm{font-size:clamp(1.8rem,7vw,2.4rem);text-align:left}
@@ -87,6 +87,9 @@ mark{background:linear-gradient(transparent 55%,var(--mark) 55%);color:inherit;f
 kbd{font:500 .78rem "Bricolage Grotesque",Arial,sans-serif;background:var(--chip);border-radius:5px;padding:1px 6px}
 .empty{padding:50px 20px;text-align:center;color:var(--ink-2)}
 .done{margin-top:12px;text-align:center;color:var(--ok);font:700 1rem "Bricolage Grotesque",Arial,sans-serif;min-height:1.4em}
+.speak{position:absolute;left:12px;bottom:12px;width:46px;height:46px;border-radius:50%;border:0;padding:0;background:var(--chip-on);color:var(--chip-on-ink);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 6px 16px -6px rgba(27,40,80,.6)}
+.speak[hidden]{display:none}
+.speak.on{background:var(--margin);color:#fff}
 .status{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--line)}
 .status.k{background:var(--ok)} .status.l{background:var(--learn)}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:18px;box-shadow:var(--shadow)}
@@ -104,7 +107,7 @@ kbd{font:500 .78rem "Bricolage Grotesque",Arial,sans-serif;background:var(--chip
 .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .err{color:var(--learn);font:500 .88rem "Bricolage Grotesque",Arial,sans-serif;min-height:1.2em}
 @media (prefers-reduced-motion:reduce){.card{transition:none}.bar i{transition:none}}
-@media (max-width:520px){.body{padding:46px 18px 22px}.row2{grid-template-columns:1fr}.glabel{min-width:100%}}
+@media (max-width:520px){.body{padding:46px 18px 66px}.row2{grid-template-columns:1fr}.glabel{min-width:100%}}
 </style>
 </head>
 <body>
@@ -165,6 +168,9 @@ kbd{font:500 .78rem "Bricolage Grotesque",Arial,sans-serif;background:var(--chip
 
   <div class="scene">
     <button class="card" id="card" aria-live="polite" aria-label="Flashcard. Press to flip."></button>
+    <button class="speak" id="speak" aria-label="Hear the pronunciation" title="Hear it (P)" hidden>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+    </button>
   </div>
 
   <div class="nav">
@@ -181,7 +187,7 @@ kbd{font:500 .78rem "Bricolage Grotesque",Arial,sans-serif;background:var(--chip
     <button class="btn" id="delBtn">Delete this word</button>
   </div>
   <div class="done" id="done" role="status"></div>
-  <div class="keys"><kbd>Space</kbd> flip &nbsp; <kbd>←</kbd> <kbd>→</kbd> navigate &nbsp; <kbd>L</kbd> still learning &nbsp; <kbd>G</kbd> got it</div>
+  <div class="keys"><kbd>Space</kbd> flip &nbsp; <kbd>←</kbd> <kbd>→</kbd> navigate &nbsp; <kbd>L</kbd> still learning &nbsp; <kbd>G</kbd> got it &nbsp; <kbd>P</kbd> hear it</div>
 </div>
 
 <script>
@@ -835,7 +841,7 @@ function render(){
     card.className="card";
     card.setAttribute("aria-label","No cards in this deck");
     card.innerHTML=`<div class="face front"><div class="top"><span></span></div><div class="body empty">${deck==="mine"&&!custom.length?"You haven't added any words yet.<br>Select the + button at the bottom of the page to make your first card.":"No cards match these filters.<br>Try a different deck or progress filter."}</div></div>`;
-    $("pos").textContent="0 / 0"; $("done").textContent=""; $("mineActions").hidden=true; return;
+    $("pos").textContent="0 / 0"; $("done").textContent=""; $("mineActions").hidden=true; updateSpeak(); return;
   }
   const w=BYID[order[idx]], s=status[w.id];
   $("pos").textContent=`${idx+1} / ${order.length}`;
@@ -858,11 +864,48 @@ function render(){
   card.setAttribute("aria-label",`Flashcard ${idx+1} of ${order.length}. Press to flip.`);
   card.innerHTML=`<div class="face front"><div class="top">${left}${dot}</div>${front}</div><div class="face back"><div class="top">${left}${dot}</div>${back}</div>`;
   $("done").textContent=order.every(id=>status[id]==="k")?"Every card in this view is marked Got it.":"";
+  updateSpeak();
+}
+
+/* ---------- pronunciation ---------- */
+// Optional human recordings, keyed by lowercase term: {"veneration":"data:audio/mpeg;base64,..."}.
+// A card with a recording plays it; every other card uses the browser's built-in voice.
+const AUDIO={};
+const canSpeak=("speechSynthesis" in window)&&("SpeechSynthesisUtterance" in window);
+let voice=null;
+function pickVoice(){
+  if(!canSpeak) return;
+  const vs=speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang));
+  const pref=[/natural|neural|premium|enhanced/i,/google us english|samantha|aria|jenny|ava|allison|zira/i,/en[-_]US/i];
+  voice=null;
+  for(const re of pref){ voice=vs.find(v=>re.test(v.name)||re.test(v.lang)); if(voice) break; }
+  if(!voice) voice=vs[0]||null;
+}
+if(canSpeak){ pickVoice(); try{ speechSynthesis.addEventListener("voiceschanged",pickVoice); }catch(e){} }
+function speakText(w){ return (w.kind==="root"||w.kind==="prefix"||w.kind==="suffix") ? w.eg : (w.term||w.word); }
+function updateSpeak(){
+  const w=order.length?BYID[order[idx]]:null;
+  const hide=!w||(!canSpeak&&!AUDIO[(w.term||w.word).toLowerCase()])||flipped;
+  const b=$("speak"); b.hidden=hide;
+  if(w) b.setAttribute("aria-label",["root","prefix","suffix"].includes(w.kind)?"Hear the example words":"Hear the pronunciation");
+}
+function playCurrent(){
+  if(!order.length||$("speak").hidden) return;
+  const w=BYID[order[idx]], b=$("speak"), clip=AUDIO[(w.term||w.word).toLowerCase()];
+  const done=()=>b.classList.remove("on");
+  b.classList.add("on");
+  try{
+    if(clip){ const a=new Audio(clip); a.onended=done; a.onerror=done; a.play().catch(done); return; }
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(speakText(w));
+    u.lang=voice?voice.lang:"en-US"; if(voice) u.voice=voice; u.rate=.85;
+    u.onend=done; u.onerror=done; speechSynthesis.speak(u);
+  }catch(e){ done(); }
 }
 
 /* ---------- actions ---------- */
-function flip(){ if(!order.length) return; flipped=!flipped; $("card").classList.toggle("flipped",flipped); }
-function go(d){ if(!order.length) return; idx=(idx+d+order.length)%order.length; flipped=false; render(); }
+function flip(){ if(!order.length) return; flipped=!flipped; $("card").classList.toggle("flipped",flipped); updateSpeak(); }
+function go(d){ if(canSpeak) try{ speechSynthesis.cancel(); }catch(e){} $("speak").classList.remove("on"); if(!order.length) return; idx=(idx+d+order.length)%order.length; flipped=false; render(); }
 function mark(v){
   if(!order.length) return;
   status[order[idx]]=v; save();
@@ -879,6 +922,7 @@ function armConfirm(btn,label,doIt){
 }
 
 $("card").addEventListener("click",flip);
+$("speak").onclick=playCurrent;
 $("prev").onclick=()=>go(-1); $("next").onclick=()=>go(1);
 $("bl2").onclick=()=>mark("l"); $("bg2").onclick=()=>mark("k");
 document.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{deck=b.dataset.d; build();});
@@ -940,6 +984,7 @@ document.addEventListener("keydown",e=>{
   else if(e.key==="ArrowLeft") go(-1);
   else if(e.key==="l"||e.key==="L") mark("l");
   else if(e.key==="g"||e.key==="G") mark("k");
+  else if(e.key==="p"||e.key==="P") playCurrent();
 });
 
 build();
